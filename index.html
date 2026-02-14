@@ -96,6 +96,7 @@ button{padding:12px 28px;font-size:16px;border:none;border-radius:25px;cursor:po
 <audio id="bgm" src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/bgm.mp3" preload="auto"></audio>
 
 <script>
+  const bgm = document.getElementById("bgm");
 let noCount=0;
 let clickedNoBefore=false;
 const messages=["I guess it was a misclick 🙃","You’re making me cry 😭","But he really loves you by heart 🥺","Are you really sure about your NO? 🥺"];
@@ -199,6 +200,7 @@ function celebrate(immediateYes=false){
 
     giftBtn.addEventListener("click",()=>{
       poemBox.style.display="block";
+      bgm.play().catch(()=>{});
       poemBox.scrollTop=0;
       bgm.play(); // Play audio when envelope clicked
       let scrollAmount=0;
@@ -238,5 +240,7 @@ function startConfetti(){
   }
 }
 </script>
+  <audio id="bgm" src="bgm.mp3" preload="auto"></audio>
 </body>
+
 </html>
