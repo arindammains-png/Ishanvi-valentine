@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Ishanvi 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{height:100vh;overflow:hidden;display:flex;justify-content:center;align-items:center;transition: background 1s ease;background: linear-gradient(135deg,#800020,#4b001f);}
+
+/* Curtains */
+.curtain{position:fixed;top:0;width:50%;height:100%;background:linear-gradient(to right,#ff4d6d,#c9184a);z-index:10;transition:2s ease;}
+.left{left:0;}
+.right{right:0;}
+.open-left{transform:translateX(-100%);}
+.open-right{transform:translateX(100%);}
+
+/* Main Box */
+.main-box{position:relative;background:#ffc0cb;color:#800020;padding:80px 40px 60px;border-radius:30px;box-shadow:0 0 60px rgba(255,20,100,0.5);text-align:center;width:420px;opacity:0;transform:scale(0.8);transition:1.5s ease;}
+.main-box.show{opacity:1;transform:scale(1);}
+h1{font-size:28px;font-weight:800;margin-bottom:10px;}
+h2{font-size:18px;margin-bottom:30px;}
+.buttons{display:flex;justify-content:space-around;position:relative;height:80px;}
+button{padding:12px 28px;font-size:16px;border:none;border-radius:25px;cursor:pointer;font-weight:600;width:120px;}
+.yes{background:#ff1744;color:white;transition:0.4s ease;}
+.no{background:black;color:white;transition: all 0.6s cubic-bezier(.17,.67,.83,.67);}
+.yes.beat{animation:heartbeat 0.8s infinite;}
+@keyframes heartbeat{0%{transform:scale(1);}50%{transform:scale(1.15);}100%{transform:scale(1);}}
+
+/* Teddy */
+.teddy-wrap{position:absolute;top:-120px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;}
+.teddy{width:100px;height:100px;background:#d98c5f;border-radius:50%;position:relative;}
+.ear{width:40px;height:40px;background:#d98c5f;border-radius:50%;position:absolute;top:-15px;}
+.ear.left{left:-10px;}
+.ear.right{right:-10px;}
+.eye{width:10px;height:14px;background:black;border-radius:50%;position:absolute;top:35px;}
+.eye.left{left:30px;}
+.eye.right{right:30px;}
+.nose{width:18px;height:12px;background:#5c3a2e;border-radius:50%;position:absolute;top:55px;left:50%;transform:translateX(-50%);}
+.mouth{width:30px;height:8px;background:black;border-radius:0 0 20px 20px;position:absolute;bottom:20px;left:50%;transform:translateX(-50%);transition:all 0.3s ease;}
+.mouth.sad{border-radius:20px 20px 0 0;top:70px;bottom:auto;}
+
+/* Speech */
+.speech{background:white;color:#800020;padding:8px 12px;border-radius:15px;font-size:13px;margin-bottom:10px;box-shadow:0 5px 15px rgba(0,0,0,0.2);display:none;max-width:250px;text-align:center;}
+
+/* Falling hearts */
+.fall{position:absolute;top:-20px;font-size:20px;animation:fall linear infinite;}
+@keyframes fall{to{transform:translateY(110vh);}}  
+
+/* Success Page */
+.success-page{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:linear-gradient(135deg,#ffb6c1,#ff4d6d);text-align:center;padding:20px;opacity:0;animation:fadeIn 1s forwards;position:relative;overflow:hidden;}
+@keyframes fadeIn{0%{opacity:0;}100%{opacity:1;}}
+.top-line{font-size:28px;font-weight:800;color:#800020;margin-bottom:20px;text-align:center;}
+.pink-box{background:#ffc0cb;padding:40px 30px;border-radius:30px;box-shadow:0 0 40px rgba(255,0,100,0.4);text-align:center;margin-bottom:20px;}
+.pink-box h2{color:red;font-size:26px;margin-bottom:10px;}
+
+/* Gift Line */
+.bottom-text{font-weight:800;color:#800020;text-align:center;margin-top:20px;cursor:pointer;text-decoration:none;font-size:28px;}
+#envelope{font-size:60px;margin-top:10px;transition:transform 0.5s ease;}
+
+/* Poem Box */
+.poem-box{display:none;background: linear-gradient(135deg,#800020,#b22222,#ff6347,#ffb6c1);color:white;padding:40px 30px;border-radius:25px;margin-top:30px;text-align:center;line-height:2;font-size:18px;box-shadow:0 8px 20px rgba(0,0,0,0.3);max-height:80vh;overflow-y:auto;scroll-behavior:smooth;}
+
+/* Confetti */
+.confetti{position:absolute;width:10px;height:10px;opacity:0.8;top:0;pointer-events:none;animation:confetti-fall linear forwards;}
+@keyframes confetti-fall{0%{transform:translateY(0) rotate(0deg);}100%{transform:translateY(100vh) rotate(360deg);}}
+</style>
+</head>
+<body>
+
+<div class="curtain left"></div>
+<div class="curtain right"></div>
+
+<div class="main-box" id="mainBox">
+  <div class="teddy-wrap">
+    <div class="speech" id="speechText"></div>
+    <div class="teddy" id="teddyFace">
+      <div class="ear left"></div>
+      <div class="ear right"></div>
+      <div class="eye left"></div>
+      <div class="eye right"></div>
+      <div class="nose"></div>
+      <div class="mouth" id="mouth"></div>
+    </div>
+  </div>
+  <h1>ISHANVI !!</h1>
+  <h2>WILL YOU BE MY VALENTINE 💌💌</h2>
+  <div class="buttons">
+    <button class="yes" onclick="celebrate(true)">Yes!!</button>
+    <button class="no" onclick="noMove()">No</button>
+  </div>
+</div>
+
+<!-- Audio placeholder -->
+<audio id="bgm" src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/bgm.mp3" preload="auto"></audio>
+
+<script>
+let noCount=0;
+let clickedNoBefore=false;
+const messages=["I guess it was a misclick 🙃","You’re making me cry 😭","But he really loves you by heart 🥺","Are you really sure about your NO? 🥺"];
+const mouth=document.getElementById("mouth");
+
+window.onload=function(){
+  setTimeout(()=>{document.querySelector('.left').classList.add('open-left');document.querySelector('.right').classList.add('open-right');},1000);
+  setTimeout(()=>{document.getElementById('mainBox').classList.add('show');},3000);
+};
+
+function noMove(){
+  noCount++;
+  clickedNoBefore=true;
+  const speech=document.getElementById("speechText");
+  const yesBtn=document.querySelector(".yes");
+  const noBtn=document.querySelector(".no");
+  const box=document.querySelector(".buttons");
+
+  if(noCount===1) mouth.classList.add("sad");
+
+  speech.style.display="block";
+  speech.innerText=messages[Math.min(noCount-1,messages.length-1)];
+
+  yesBtn.classList.add("beat");
+
+  if(noCount>=messages.length){
+    const boxRect=box.getBoundingClientRect();
+    const yesRect=yesBtn.getBoundingClientRect();
+    let newX=Math.random()*(boxRect.width-noBtn.offsetWidth);
+    let newY=Math.random()*(boxRect.height-noBtn.offsetHeight);
+
+    if(!(newX+noBtn.offsetWidth<yesRect.left-boxRect.left || newX>yesRect.right-boxRect.left || newY+noBtn.offsetHeight<yesRect.top-boxRect.top || newY>yesRect.bottom-boxRect.top)){
+        newX=newX>yesRect.right-boxRect.left?newX+40:newX-40;
+        newY=newY>yesRect.bottom-boxRect.top?newY+20:newY-20;
+    }
+
+    noBtn.style.position="absolute";
+    noBtn.style.left=newX+"px";
+    noBtn.style.top=newY+"px";
+  }
+}
+
+function celebrate(immediateYes=false){
+  document.body.innerHTML=`
+  <div class="success-page">
+    ${clickedNoBefore?'<div class="top-line">HEHE YOU SAID YES 😂 ❤️❤️</div>':''}
+    <div class="pink-box">
+      <h2>I KNEW YOU WOULD SAY YES</h2>
+      <h2>I AM REALLY HAPPY TO HAVE A CUTE GIRL LIKE YOU ISHANVI</h2>
+      <h2>💗💗 I LIKE YOU SO MUCH ISHANVI 💗💗</h2>
+    </div>
+    <div class="bottom-text" id="giftBtn">
+      Here’s your gift ISHANVI
+      <div id="envelope">💌</div>
+    </div>
+    <div class="poem-box" id="poemBox">
+      <!-- Poem lines -->
+      <p style="font-weight:bold;font-size:22px;margin-bottom:25px;">THATS ONLY FOR YOU DEAR 💗</p>
+      <p>Yaar, teri aankhon mein wo noor hai,</p>
+      <p>Maano jaise tu hi mere sapno ki hoor hai.</p>
+      <p>Bhul chuka hoon main wo tanhai, Jabse milke tujhse baji hai dil mein pyar ki shehnai.</p>
+      <p>Tere in pyare haathon ko main thamna chahta hoon,</p>
+      <p>Tere saath har pal main jeena chahta hoon.</p>
+      <p>Tere liye main har pal aasakt hoon,</p>
+      <p>Tu hi meri duniya, tu hi meri hasrat hoon...</p>
+      <p>Vaise manna pdega kuch to baat hai is ladki main,</p>
+      <p>Kasam se kamal ki hai tu ishanvii ❤️❤️</p>
+      <p style="margin-top:30px;">[यार, तेरी आँखों में वो नूर है,</p>
+      <p>माना जैसे तू ही मेरे सपनों की हूर है।</p>
+      <p>भूल चुका हूँ मैं वो तन्हाई, जबसे मिलके तुझसे बजी है दिल में प्यार की शहनाई।</p>
+      <p>तेरे इन प्यारे हाथों को मैं थामना चाहता हूँ, तेरे साथ हर पल मैं जीना चाहता हूँ।</p>
+      <p>तेरे लिए मैं हर पल आसक्त हूँ,</p>
+      <p>तू ही मेरी दुनिया, तू ही मेरी हसरत हूँ।</p>
+      <p>वैसे, मानना पड़ेगा—कुछ तो बात है इस लड़की में,</p>
+      <p>कसम से, कमाल की है तू इशानीवी ❤️❤️]</p>
+      <p style="margin-top:30px;">ITS NOT OVER HEHE...😂❤️</p>
+      <p>Ishanvi, your smile outshines the stars above,</p>
+      <p>Every glance from you fills my heart with love.</p>
+      <p>The spark in your eyes lights my soul to blue</p>
+      <p>Every moment with you feels forever true. ✨</p>
+      <p style="margin-top:20px;">Obsession is my state</p>
+      <p>Confession is my fate</p>
+      <p>I really can't fake about My interest in you</p>
+      <p>And that's my trait ...</p>
+      <p style="margin-top:20px;">Yaar vaise tum pyari to buhatt ho Hehe 🥺🙃🙃❤️❤️</p>
+      <div style="margin-top:30px; font-size:32px; font-weight:bold; color:#8B0000; text-shadow:2px 2px 8px #ffb6c1;">
+      Happy Valentine's Day ISHANVI ❤️❤️
+      </div>
+    </div>
+  </div>
+  `;
+  startConfetti();
+  setTimeout(()=>{
+    const giftBtn=document.getElementById("giftBtn");
+    const envelope=document.getElementById("envelope");
+    const poemBox=document.getElementById("poemBox");
+    const bgm=document.getElementById("bgm");
+
+    envelope.addEventListener("mouseenter",()=>{ envelope.style.transform="scale(1.2)"; });
+    envelope.addEventListener("mouseleave",()=>{ envelope.style.transform="scale(1)"; });
+
+    giftBtn.addEventListener("click",()=>{
+      poemBox.style.display="block";
+      poemBox.scrollTop=0;
+      bgm.play(); // Play audio when envelope clicked
+      let scrollAmount=0;
+      const interval=setInterval(()=>{
+        scrollAmount+=0.3;
+        poemBox.scrollTop=scrollAmount;
+        if(scrollAmount>=poemBox.scrollHeight-poemBox.clientHeight){
+          clearInterval(interval);
+        }
+      },50);
+    });
+  },100);
+}
+
+function createFall(){
+  const el=document.createElement("div");
+  el.classList.add("fall");
+  el.innerHTML=Math.random()>0.5?"💖":"🌸";
+  el.style.left=Math.random()*100+"vw";
+  el.style.animationDuration=(3+Math.random()*4)+"s";
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),8000);
+}
+setInterval(createFall,300);
+
+function startConfetti(){
+  for(let i=0;i<150;i++){
+    const conf=document.createElement("div");
+    conf.classList.add("confetti");
+    conf.style.backgroundColor=`hsl(${Math.random()*360},80%,60%)`;
+    conf.style.left=Math.random()*100+'vw';
+    conf.style.width=5+Math.random()*8+'px';
+    conf.style.height=5+Math.random()*8+'px';
+    conf.style.animationDuration=(2+Math.random()*3)+'s';
+    document.body.appendChild(conf);
+    setTimeout(()=>conf.remove(),4000);
+  }
+}
+</script>
+</body>
+</html>
